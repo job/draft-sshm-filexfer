@@ -117,7 +117,7 @@ byte[length - 1]   data payload
 
     <t>
       That is, they are just data preceded by 32-bit length and 8-bit type fields.
-      The <tt>length</tt> s the length of the data area, and does not include the <tt>length</tt> field itself.
+      The <tt>length</tt> field contains the length of the data area, and does not include the <tt>length</tt> field itself.
       The format and interpretation of the data area depends on the packet type.
     </t>
 

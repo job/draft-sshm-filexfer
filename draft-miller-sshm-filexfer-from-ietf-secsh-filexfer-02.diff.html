@@ -255,14 +255,14 @@ document.onkeydown = function(e) {
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">   That is, they are just data preceded by 32-bit length and 8-bit type</td><td> </td><td class="right">   That is, they are just data preceded by 32-bit length and 8-bit type</td><td class="lineno"></td></tr>
       <tr id="diff0017"><td></td></tr>
-      <tr><td class="lineno"></td><td class="lblock">   fields.  The <span class="delete">`</span>length' is the length of the data area, and does not</td><td> </td><td class="rblock">   fields.  The length' is the length of the data area, and does not</td><td class="lineno"></td></tr>
-      <tr><td class="lineno"></td><td class="left">   include the `length' field itself.  The format and interpretation of</td><td> </td><td class="right">   include the `length' field itself.  The format and interpretation of</td><td class="lineno"></td></tr>
-      <tr><td class="lineno"></td><td class="left">   the data area depends on the packet type.</td><td> </td><td class="right">   the data area depends on the packet type.</td><td class="lineno"></td></tr>
+      <tr><td class="lineno"></td><td class="lblock">   fields.  The <span class="delete">`length' is</span> the length of the data area, and does not</td><td> </td><td class="rblock">   fields.  The <span class="insert">length field contains</span> the length of the data area, and</td><td class="lineno"></td></tr>
+      <tr><td class="lineno"></td><td class="lblock">   include the <span class="delete">`length'</span> field itself.  The format and interpretation of</td><td> </td><td class="rblock">   does not include the <span class="insert">length</span> field itself.  The format and</td><td class="lineno"></td></tr>
+      <tr><td class="lineno"></td><td class="lblock">   the data area depends on the packet type.</td><td> </td><td class="rblock">   interpretation of the data area depends on the packet type.</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">   All packet descriptions below only specify the packet type and the</td><td> </td><td class="right">   All packet descriptions below only specify the packet type and the</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">   data that goes into the data field.  Thus, they should be prefixed by</td><td> </td><td class="right">   data that goes into the data field.  Thus, they should be prefixed by</td><td class="lineno"></td></tr>
       <tr id="diff0018"><td></td></tr>
-      <tr><td class="lineno"></td><td class="lblock">   the <span class="delete">`</span>length' and `type' fields.</td><td> </td><td class="rblock">   the length' and `type' fields.</td><td class="lineno"></td></tr>
+      <tr><td class="lineno"></td><td class="lblock">   the <span class="delete">`length' and `type'</span> fields.</td><td> </td><td class="rblock">   the <span class="insert">length and type</span> fields.</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">   The maximum size of a packet is in practice determined by the client</td><td> </td><td class="right">   The maximum size of a packet is in practice determined by the client</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">   (the maximum size of read or write requests that it sends, plus a few</td><td> </td><td class="right">   (the maximum size of read or write requests that it sends, plus a few</td><td class="lineno"></td></tr>
@@ -1306,7 +1306,7 @@ document.onkeydown = function(e) {
 
      <tr><td></td><td class="left"></td><td> </td><td class="right"></td><td></td></tr>
      <tr id="end" bgcolor="gray"><th colspan="5" align="center">&nbsp;End of changes. 112 change blocks.&nbsp;</th></tr>
-     <tr class="stats"><td></td><th><i>333 lines changed or deleted</i></th><th><i> </i></th><th><i>301 lines changed or added</i></th><td></td></tr>
+     <tr class="stats"><td></td><th><i>335 lines changed or deleted</i></th><th><i> </i></th><th><i>303 lines changed or added</i></th><td></td></tr>
      <tr><td colspan="5" align="center" class="small"><br/>This html diff was produced by rfcdiff 1.46. The latest version is available from <a href="http://www.tools.ietf.org/tools/rfcdiff/" >http://tools.ietf.org/tools/rfcdiff/</a> </td></tr>
    </table>
    </body>
