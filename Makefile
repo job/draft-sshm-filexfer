@@ -1,4 +1,4 @@
-NAME=draft-miller-sshm-filexfer
+NAME=draft-spaghetti-sshm-filexfer
 
 LAST_UPLOADED=00
 

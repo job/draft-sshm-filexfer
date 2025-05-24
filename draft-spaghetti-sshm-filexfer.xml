@@ -10,7 +10,7 @@
 
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude"
   category="std"
-  docName="draft-miller-sshm-filexfer-00"
+  docName="draft-spaghetti-sshm-filexfer-00"
   ipr="trust200902"
   submissionType="IETF"
   consensus="true">
@@ -18,14 +18,6 @@
 <front>
 
   <title>SSH File Transfer Protocol</title>
-
-  <author fullname="Damien Miller" initials="D." surname="Miller" role="editor">
-    <organization>OpenSSH</organization>
-    <address>
-      <email>djm@openssh.com</email>
-      <uri>https://www.openssh.com/</uri>
-    </address>
-  </author>
 
   <author fullname="Job Snijders" initials="J." surname="Snijders" role="editor">
     <organization/>
