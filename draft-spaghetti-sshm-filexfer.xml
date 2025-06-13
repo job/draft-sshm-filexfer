@@ -32,6 +32,19 @@
     </address>
   </author>
 
+  <author fullname="Florian Obser" initials="F." surname="Obser" role="editor">
+    <organization/>
+    <address>
+      <postal>
+        <street/>
+        <code/>
+        <city>Den Haag</city>
+        <country>NL</country>
+      </postal>
+      <email>florian@openbsd.org</email>
+    </address>
+  </author>
+
   <author fullname="Job Snijders" initials="J." surname="Snijders" role="editor">
     <organization/>
     <address>
@@ -94,7 +107,7 @@
 
     <t>
       Even though this protocol is described in the context of the SSH2 protocol, this protocol is general and independent of the rest of the SSH2 protocol suite.
-      It could be used in a number of different applications, such as secure file transfer over TLS <xref target="RFC2246"/> and transfer of management information in VPN applications.
+      It could be used in a number of different applications, such as secure file transfer over TLS <xref target="RFC8446"/> and transfer of management information in VPN applications.
     </t>
 
   </section>
@@ -308,7 +321,7 @@ string   extended_data
       Additional fields can be added to the attributes by either defining additional bits to the flags field to indicate their presence, or by defining extended attributes for them.
       The extended attributes mechanism is recommended for most purposes; additional flags bits should only be defined by an IETF standards action that also increments the protocol version number.
       The use of such new fields MUST be negotiated by the version number in the protocol exchange.
-      It is a protocol error if a packet with unsupported protocol bits is received.
+      It is a protocol error if a packet with unsupported flags bits is received.
     </t>
 
     <t>
@@ -1095,6 +1108,12 @@ uint32     id
 
   </section>
 
+  <section title="IANA Considerations">
+    <t>
+      This document has no IANA actions.
+    </t>
+  </section>
+
   <section title="Contributors">
 
     <t>
@@ -1122,11 +1141,11 @@ uint32     id
   <references title="Normative References">
 
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
-    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2246.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4251.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4252.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4254.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml"/>
 
     <reference anchor="POSIX" target="https://publications.opengroup.org/standards/unix/c243" quoteTitle="true" derivedAnchor="POSIX">
       <front>
