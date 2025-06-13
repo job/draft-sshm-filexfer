@@ -308,7 +308,7 @@ string   extended_data
       Additional fields can be added to the attributes by either defining additional bits to the flags field to indicate their presence, or by defining extended attributes for them.
       The extended attributes mechanism is recommended for most purposes; additional flags bits should only be defined by an IETF standards action that also increments the protocol version number.
       The use of such new fields MUST be negotiated by the version number in the protocol exchange.
-      It is a protocol error if a packet with unsupported protocol bits is received.
+      It is a protocol error if a packet with unsupported flags bits is received.
     </t>
 
     <t>
