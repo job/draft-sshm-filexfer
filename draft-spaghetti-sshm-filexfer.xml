@@ -32,6 +32,19 @@
     </address>
   </author>
 
+  <author fullname="Florian Obser" initials="F." surname="Obser" role="editor">
+    <organization/>
+    <address>
+      <postal>
+        <street/>
+        <code/>
+        <city>Den Haag</city>
+        <country>NL</country>
+      </postal>
+      <email>florian@openbsd.org</email>
+    </address>
+  </author>
+
   <author fullname="Job Snijders" initials="J." surname="Snijders" role="editor">
     <organization/>
     <address>
