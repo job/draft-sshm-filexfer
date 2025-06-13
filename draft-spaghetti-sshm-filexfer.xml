@@ -94,7 +94,7 @@
 
     <t>
       Even though this protocol is described in the context of the SSH2 protocol, this protocol is general and independent of the rest of the SSH2 protocol suite.
-      It could be used in a number of different applications, such as secure file transfer over TLS <xref target="RFC2246"/> and transfer of management information in VPN applications.
+      It could be used in a number of different applications, such as secure file transfer over TLS <xref target="RFC8446"/> and transfer of management information in VPN applications.
     </t>
 
   </section>
@@ -1122,11 +1122,11 @@ uint32     id
   <references title="Normative References">
 
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
-    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2246.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4251.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4252.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4254.xml"/>
     <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml"/>
 
     <reference anchor="POSIX" target="https://publications.opengroup.org/standards/unix/c243" quoteTitle="true" derivedAnchor="POSIX">
       <front>
