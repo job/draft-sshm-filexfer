@@ -204,7 +204,7 @@ byte[length - 1]   data payload
     <t>
       When the file transfer protocol starts, it first sends a <tt>SSH_FXP_INIT</tt> (including its version number) packet to the server.
       The server responds with a <tt>SSH_FXP_VERSION</tt> packet, supplying the lowest of its own and the client's version number.
-      Both parties should from then on adhere to particular version of the protocol.
+      This is the negotiated protocol version number that both parties MUST adhere to.
     </t>
 
     <t>
@@ -231,11 +231,11 @@ uint32 version
 
     <t>
       The version number of the protocol specified in this document is 3.
-      The version number should be incremented for each incompatible revision of this protocol.
+      The version number MUST be incremented for each incompatible revision of this protocol.
     </t>
 
     <t>
-      The extension data in the above packets may be empty, or may be a sequence of
+      The extension data in the above packets MAY be empty, or MAY be a sequence of
     </t>
 
 <sourcecode>
@@ -244,10 +244,10 @@ string extension_data
 </sourcecode>
 
     <t>
-      pairs (both strings MUST always be present if one is, but the <tt>extension_data</tt> string may be of zero length).
+      pairs (both strings MUST always be present if one is, but the <tt>extension_data</tt> string MAY be of zero length).
       If present, these strings indicate extensions to the baseline protocol.
       The <tt>extension_name</tt> field(s) identify the name of the extension.
-      The name should be of the form "name@domain", where the domain is the DNS domain name of the organization defining the extension.
+      The name SHOULD be of the form "name@domain", where the domain is the DNS domain name of the organization defining the extension.
       Additional names that are not of this format may be defined later by the IETF.
       Implementations MUST silently ignore any extensions whose name they do not recognize.
     </t>
@@ -311,7 +311,7 @@ string   extended_data
       If the flag is specified, then the <tt>extended_count</tt> field is present.
       It specifies the number of <tt>extended_type-extended_data</tt> pairs that follow.
       Each of these pairs specifies an extended attribute.
-      For each of the attributes, the <tt>extended_type</tt> field should be a string of the format "name@domain", where "domain" is a valid, registered domain name and "name" identifies the method.
+      For each of the attributes, the <tt>extended_type</tt> field SHOULD be a string of the format "name@domain", where "domain" is a valid, registered domain name and "name" identifies the method.
       The IETF may later standardize certain names that deviate from this format (e.g., that do not contain the "@" sign).
       The interpretation of <tt>extended_data</tt> depends on the type.
       Implementations SHOULD ignore extended data fields that they do not understand.
@@ -351,14 +351,14 @@ string   extended_data
     <t>
       Many operations in the protocol operate on open files.
       The <tt>SSH_FXP_OPEN</tt> request can return a file handle (which is an opaque variable-length string) which may be used to access the file later (e.g. in a read operation).
-      The client MUST NOT send requests the server with bogus or closed handles.
+      The client MUST NOT send requests to the server with bogus or closed handles.
       However, the server MUST perform adequate checks on the handle in order to avoid security risks due to fabricated handles.
     </t>
 
     <t>
       This design allows either stateful and stateless server implementation, as well as an implementation which caches state between requests but may also flush it.
       The contents of the file handle string are entirely up to the server and its design.
-      The client should not modify or attempt to interpret the file handle strings.
+      The client MUST NOT modify or attempt to interpret the file handle strings.
     </t>
 
     <t>
@@ -498,7 +498,8 @@ ATTRS         attrs
 
       <t>
         Regardless the server operating system, the file will always be opened in "binary" mode (i.e., no translations between different character sets and newline encodings).
-        The response to this message will be either <tt>SSH_FXP_HANDLE</tt> (if the operation is successful) or <tt>SSH_FXP_STATUS</tt> (if the operation fails).
+	If the operation is successful the server MUST respond with <tt>SSH_FXP_HANDLE</tt>.
+	If the operation failed the server MUST respond with <tt>SSH_FXP_STATUS</tt>.
       </t>
 
       <t>
@@ -517,8 +518,8 @@ string     handle
       </t>
 
       <t>
-        The response to this request will be a SSH_FXP_STATUS message.
-        One should note that on some server platforms even a close can fail.
+        The server MUST respond with a  <tt>SSH_FXP_STATUS</tt> message.
+        On some server platforms a close can fail.
       </t>
 
     </section>
@@ -541,10 +542,14 @@ uint32     len
       </t>
 
       <t>
-        In response to this request, the server will read as many bytes as it can from the file (up to <tt>len</tt>), and return them in a <tt>SSH_FXP_DATA</tt> message.
-        If an error occurs or EOF is encountered before reading any data, the server will respond with <tt>SSH_FXP_STATUS</tt>.
+        In response to this request, the server MUST read as many bytes as it can from the file (up to <tt>len</tt>), and return them in a <tt>SSH_FXP_DATA</tt> message.
+        If an error occurs or EOF is encountered before reading any data, the server MUST respond with <tt>SSH_FXP_STATUS</tt>.
         For normal disk files, it is guaranteed that this will read the specified number of bytes, or up to end of file.
         For e.g.  device files this may return fewer bytes than requested.
+      </t>
+
+      <t>
+	The client SHOULD then close the handle using the <tt>SSH_FXP_CLOSE</tt> request when it is done.
       </t>
 
       <t>
@@ -569,7 +574,11 @@ string     data
       </t>
 
       <t>
-        The server responds to a write request with a <tt>SSH_FXP_STATUS</tt> message.
+        The server MUST respond to a write request with a <tt>SSH_FXP_STATUS</tt> message.
+      </t>
+
+      <t>
+	The client SHOULD then close the handle using the <tt>SSH_FXP_CLOSE</tt> request when it is done.
       </t>
 
     </section>
@@ -593,7 +602,7 @@ string     filename
       </t>
 
       <t>
-        The server will respond to this request with a <tt>SSH_FXP_STATUS</tt> message.
+        The server MUST respond to this request with a <tt>SSH_FXP_STATUS</tt> message.
       </t>
 
       <t>
@@ -614,7 +623,7 @@ string     newpath
       </t>
 
       <t>
-        The server will respond to this request with a <tt>SSH_FXP_STATUS</tt> message.
+        The server MUST respond to this request with a <tt>SSH_FXP_STATUS</tt> message.
       </t>
 
 
@@ -638,8 +647,8 @@ ATTRS      attrs
         See <xref target="fn"/> for more information on file names.
         Attributes are discussed in more detail in <xref target="fa"/>.
         <tt>path</tt> specifies the directory to be created.
-        An error will be returned if a file or directory with the specified path already exists.
-        The server will respond to this request with a <tt>SSH_FXP_STATUS</tt> message.
+        The server MUST respond to this request with a <tt>SSH_FXP_STATUS</tt> message.
+        The server MUST return an error if a file or directory with the specified path already exists.
       </t>
 
       <t>
@@ -654,8 +663,8 @@ string     path
       <t>
         where <tt>id</tt> is the request identifier, and <tt>path</tt> specifies the directory to be removed.
         See <xref target="fn"/> for more information on file names.
-        An error will be returned if no directory with the specified path exists, or if the specified directory is not empty, or if the path specified a file system object other than a directory.
-        The server responds to this request with a <tt>SSH_FXP_STATUS</tt> message.
+        The server MUST respond to this request with a <tt>SSH_FXP_STATUS</tt> message.
+        The server MUST return an error if no directory with the specified path exists, or if the specified directory is not empty, or if the path specified a file system object other than a directory.
       </t>
 
     </section>
@@ -666,7 +675,7 @@ string     path
         The files in a directory can be listed using the <tt>SSH_FXP_OPENDIR</tt> and <tt>SSH_FXP_READDIR</tt> requests.
         Each <tt>SSH_FXP_READDIR</tt> request returns one or more file names with full file attributes for each file.
         The client should call <tt>SSH_FXP_READDIR</tt> repeatedly until it has found the file it is looking for or until the server responds with a <tt>SSH_FXP_STATUS</tt> message indicating an error (normally <tt>SSH_FX_EOF</tt> if there are no more files in the directory).
-        The client should then close the handle using the <tt>SSH_FXP_CLOSE</tt> request.
+        The client SHOULD then close the handle using the <tt>SSH_FXP_CLOSE</tt> request.
       </t>
 
       <t>
@@ -682,8 +691,8 @@ string     path
       <t>
         where <tt>id</tt> is the request identifier and <tt>path</tt> is the path name of the directory to be listed (without any trailing slash).
         See <xref target="fn"/> for more information on file names.
-        This will return an error if the path does not specify a directory or if the directory is not readable.
-        The server will respond to this request with either a <tt>SSH_FXP_HANDLE</tt> or a <tt>SSH_FXP_STATUS</tt> message.
+        The server MUST respond to this request with either a <tt>SSH_FXP_HANDLE</tt> or a <tt>SSH_FXP_STATUS</tt> message.
+	The server MUST return an error if the path does not specify a directory or if the directory is not readable.
       </t>
 
       <t>
@@ -702,14 +711,14 @@ string     handle
       </t>
 
       <t>
-        The server responds to this request with either a <tt>SSH_FXP_NAME</tt> or a <tt>SSH_FXP_STATUS</tt> message.
-        One or more names may be returned at a time.
+        The server MUST respond to this request with either a <tt>SSH_FXP_NAME</tt> or a <tt>SSH_FXP_STATUS</tt> message.
+        One or more names MAY be returned at a time.
         Full status information is returned for each name in order to speed up typical directory listings.
       </t>
 
       <t>
         When the client no longer wishes to read more names from the directory, it SHOULD call <tt>SSH_FXP_CLOSE</tt> for the handle.
-        The handle should be closed regardless of whether an error has occurred or not.
+        The handle SHOULD be closed regardless of whether an error has occurred or not.
       </t>
 
     </section>
@@ -734,7 +743,7 @@ string     path
 
       <t>
         where <tt>id</tt> is the request identifier, and <tt>path</tt> specifies the file system object for which status is to be returned.
-        The server responds to this request with either SSH_FXP_ATTRS or SSH_FXP_STATUS.
+        The server MUST respond to this request with either <tt>SSH_FXP_ATTRS</tt> or <tt>SSH_FXP_STATUS</tt>.
       </t>
 
       <t>
@@ -749,7 +758,7 @@ string     handle
 
       <t>
         where <tt>id</tt> is the request identifier and <tt>handle</tt> is a file handle returned by <tt>SSH_FXP_OPEN</tt>.
-        The server responds to this request with <tt>SSH_FXP_ATTRS</tt> or <tt>SSH_FXP_STATUS</tt>.
+        The server MUST respond to this request with <tt>SSH_FXP_ATTRS</tt> or <tt>SSH_FXP_STATUS</tt>.
       </t>
 
     </section>
@@ -772,13 +781,13 @@ ATTRS      attrs
 </sourcecode>
 
       <t>
-        where <tt>id</tt> is the request identifier, <tt>path</tt> specifies the file system object (e.g. file or directory) whose attributes are to be modified, and attrs' specifies the modifications to be made to its attributes.
+        where <tt>id</tt> is the request identifier, <tt>path</tt> specifies the file system object (e.g. file or directory) whose attributes are to be modified, and <tt>attrs</tt> specifies the modifications to be made to its attributes.
         Attributes are discussed in more detail in <xref target="fa"/>.
       </t>
 
       <t>
-        An error will be returned if the specified file system object does not exist or the user does not have sufficient rights to modify the specified attributes.
-        The server responds to this request with a <tt>SSH_FXP_STATUS</tt> message.
+        The server MUST respond to this request with a <tt>SSH_FXP_STATUS</tt> message.
+        The server MUST return an error if the specified file system object does not exist or the user does not have sufficient rights to modify the specified attributes.
       </t>
 
       <t>
@@ -793,9 +802,10 @@ ATTRS      attrs
 </sourcecode>
 
       <t>
-        where <tt>id</tt> is the request identifier, <tt>handle</tt> (MUST be returned by <tt>SSH_FXP_OPEN</tt>) identifies the file whose attributes are to be modified, and attrs' specifies the modifications to be made to its attributes.
+        where <tt>id</tt> is the request identifier, <tt>handle</tt> (MUST be returned by <tt>SSH_FXP_OPEN</tt>) identifies the file whose attributes are to be modified, and <tt>attrs</tt> specifies the modifications to be made to its attributes.
         Attributes are discussed in more detail in <xref target="fa"/>.
-        The server will respond to this request with <tt>SSH_FXP_STATUS</tt>.
+        The server MUST respond to this request with <tt>SSH_FXP_STATUS</tt>.
+	The server MUST return an error if the user does not have sufficient rights to modify the specified attributes.
       </t>
 
     </section>
@@ -817,9 +827,9 @@ string     path
       </t>
 
       <t>
-        The server will respond with a SSH_FXP_NAME packet containing only one name and a dummy attributes value.
+	If an error occurs, the server MUST respond with <tt>SSH_FXP_STATUS</tt>.
+        Otherwise, the server MUST respond with a <tt>SSH_FXP_NAME</tt> packet containing only one name and a dummy attributes value.
         The name in the returned packet contains the target of the link.
-        If an error occurs, the server may respond with SSH_FXP_STATUS.
       </t>
 
       <t>
@@ -835,7 +845,7 @@ string     targetpath
 
       <t>
         where <tt>id</tt> is the request identifier, <tt>linkpath</tt> specifies the path name of the symlink to be created and <tt>targetpath</tt> specifies the target of the symlink.
-        The server shall respond with a <tt>SSH_FXP_STATUS</tt> indicating either success (<tt>SSH_FX_OK</tt>) or an error condition.
+        The server MUST respond with a <tt>SSH_FXP_STATUS</tt> indicating either success (<tt>SSH_FX_OK</tt>) or an error condition.
       </t>
 
     </section>
@@ -855,12 +865,9 @@ string     path
 
       <t>
         where <tt>id</tt> is the request identifier and <tt>path</tt> specifies the path name to be canonicalized.
-        The server will respond with a <tt>SSH_FXP_NAME</tt> packet containing only one name and a dummy attributes value.
+	If an error occurs, the server MUST respond with <tt>SSH_FXP_STATUS</tt>.
+        Otherwise, the server MUST respond with a <tt>SSH_FXP_NAME</tt> packet containing only one name and a dummy attributes value.
         The name is the returned packet will be in canonical form.
-      </t>
-
-      <t>
-        If an error occurs, the server may also respond with <tt>SSH_FXP_STATUS</tt>.
       </t>
 
     </section>
@@ -871,16 +878,16 @@ string     path
 
     <t>
       The server responds to the client using one of a few response packets.
-      All requests can return a <tt>SSH_FXP_STATUS</tt> response upon failure.
+      All requests MUST return a <tt>SSH_FXP_STATUS</tt> response upon failure.
       When the operation is successful, any of the responses may be returned (depending on the operation).
-      If no data needs to be returned to the client, the <tt>SSH_FXP_STATUS</tt> response with <tt>SSH_FX_OK</tt> status is appropriate.
+      If no data needs to be returned to the client, the <tt>SSH_FXP_STATUS</tt> response with <tt>SSH_FX_OK</tt> status MUST be send.
       Otherwise, the <tt>SSH_FXP_HANDLE</tt> message is used to return a file handle (for <tt>SSH_FXP_OPEN</tt> and <tt>SSH_FXP_OPENDIR</tt> requests), <tt>SSH_FXP_DATA</tt> is used to return data from <tt>SSH_FXP_READ</tt>, <tt>SSH_FXP_NAME</tt> is used to return one or more file names from a <tt>SSH_FXP_READDIR</tt> or <tt>SSH_FXP_REALPATH</tt> request, and <tt>SSH_FXP_ATTRS</tt> is used to return file attributes from <tt>SSH_FXP_STAT</tt>, <tt>SSH_FXP_LSTAT</tt>, and <tt>SSH_FXP_FSTAT</tt> requests.
     </t>
 
     <t>
       Exactly one response will be returned for each request.
-      Each response packet contains a request identifier which can be used to match each response with the corresponding request.
-      Note that it is legal to have several requests outstanding simultaneously, and the server is allowed to send responses to them in a different order from the order in which the requests were sent (the result of their execution, however, is guaranteed to be as if they had been processed one at a time in the order in which the requests were sent).
+      Each response packet MUST contain a request identifier which MUST be used to match each response with the corresponding request.
+      Note that it is legal to have several requests outstanding simultaneously, and the server MAY send responses to them in a different order from the order in which the requests were sent (the result of their execution, however, is MUST be as if they had been processed one at a time in the order in which the requests were sent).
     </t>
 
     <t>
@@ -929,27 +936,27 @@ string     language tag (as defined in RFC 1766)
 
       <dt>SSH_FX_EOF</dt>
       <dd>
-        Indicates end-of-file condition; for <tt>SSH_FX_READ</tt> it means that no more data is available in the file, and for <tt>SSH_FX_READDIR</tt> it indicates that no more files are contained in the directory.
+        Indicates end-of-file condition; for <tt>SSH_FX_READ</tt> it MUST be returned when no more data is available in the file, and for <tt>SSH_FX_READDIR</tt> it MUST be returned when no more files are contained in the directory.
       </dd>
 
       <dt>SSH_FX_NO_SUCH_FILE</dt>
       <dd>
-        Is returned when a reference is made to a file which should exist but doesn't.
+        MUST be returned when a reference is made to a file which should exist but doesn't.
       </dd>
 
       <dt>SSH_FX_PERMISSION_DENIED</dt>
       <dd>
-        Is returned when the authenticated user does not have sufficient permissions to perform the operation.
+        MUST be returned when the authenticated user does not have sufficient permissions to perform the operation.
       </dd>
 
       <dt>SSH_FX_FAILURE</dt>
       <dd>
-        Is a generic catch-all error message; it should be returned if an error occurs for which there is no more specific error code defined.
+        Is a generic catch-all error message; it SHOULD be returned if an error occurs for which there is no more specific error code defined.
       </dd>
 
       <dt>SSH_FX_BAD_MESSAGE</dt>
       <dd>
-        May be returned if a badly formatted packet or protocol incompatibility is detected.
+        MAY be returned if a badly formatted packet or protocol incompatibility is detected.
       </dd>
 
       <dt>SSH_FX_NO_CONNECTION</dt>
@@ -964,7 +971,7 @@ string     language tag (as defined in RFC 1766)
 
       <dt>SSH_FX_OP_UNSUPPORTED</dt>
       <dd>
-        indicates that an attempt was made to perform an operation which is not supported for the server (it may be generated locally by the client if e.g. the version number exchange indicates that a required feature is not supported by the server, or it may be returned by the server if the server does not implement an operation).
+        indicates that an attempt was made to perform an operation which is not supported for the server (it may be generated locally by the client if e.g. the version number exchange indicates that a required feature is not supported by the server, or it MAY be returned by the server if the server does not implement an operation).
       </dd>
 
     </dl>
@@ -995,7 +1002,7 @@ string     data
 
     <t>
       where <tt>id</tt> is the request identifier, and <tt>data</tt> is an arbitrary byte string containing the requested data.
-      The data string may be at most the number of bytes requested in a <tt>SSH_FXP_READ</tt> request, but may also be shorter if end of file is reached or if the read is from something other than a regular file.
+      The data string MAY be at most the number of bytes requested in a <tt>SSH_FXP_READ</tt> request, but MAY also be shorter if end of file is reached or if the read is from something other than a regular file.
     </t>
 
     <t>
@@ -1019,7 +1026,7 @@ repeats count times:
     <t>
       The format of the <tt>longname</tt> field is unspecified by this protocol.
       It MUST be suitable for use in the output of a directory listing command (in fact, the recommended operation for a directory listing command is to simply display this data).
-      However, clients SHOULD NOT attempt to parse the longname field for file attributes; they SHOULD use the attrs field instead.
+      However, clients SHOULD NOT attempt to parse the longname field for file attributes; they SHOULD use the <tt>attrs</tt> field instead.
     </t>
 
     <t>
@@ -1056,7 +1063,7 @@ ATTRS      attrs
   <section title="Vendor-Specific Extensions" anchor="vse">
 
     <t>
-      The SSH_FXP_EXTENDED request provides a generic extension mechanism for adding vendor-specific commands.
+      The <tt>SSH_FXP_EXTENDED</tt> request provides a generic extension mechanism for adding vendor-specific commands.
       The request has the following format:
     </t>
 
@@ -1067,13 +1074,13 @@ string     extended-request
 </sourcecode>
 
     <t>
-      where <tt>id</tt> is the request identifier, and <tt>extended-request</tt> is a string of the format "name@domain", where domain is an internet domain name of the vendor defining the request.
-      The rest of the request is completely vendor-specific, and servers should only attempt to interpret it if they recognize the extended-request' name.
+      where <tt>id</tt> is the request identifier, and <tt>extended-request</tt> SHOULD be a string of the format "name@domain", where domain is an internet domain name of the vendor defining the request.
+      The rest of the request is completely vendor-specific, and servers SHOULD only attempt to interpret it if they recognize the extended-request' name.
     </t>
 
     <t>
-      The server may respond to such requests using any of the response packets defined in <xref target="rftsttc"/>.
-      Additionally, the server may also respond with a <tt>SSH_FXP_EXTENDED_REPLY</tt> packet, as defined below.
+      The server MAY respond to such requests using any of the response packets defined in <xref target="rftsttc"/>.
+      The server MAY alternatively respond with a <tt>SSH_FXP_EXTENDED_REPLY</tt> packet, as defined below.
       If the server does not recognize the <tt>extended-request</tt> name, then the server MUST respond with <tt>SSH_FXP_STATUS</tt> with <tt>error/status</tt> set to <tt>SSH_FX_OP_UNSUPPORTED</tt>.
     </t>
 
