@@ -257,15 +257,7 @@ string extension_data
   <section title="File Attributes" anchor="fa">
 
     <t>
-      A new compound data type is defined for encoding file attributes.
-      It is basically just a combination of elementary types, but is defined once because of the non-trivial description of the fields and to ensure maintainability.
-    </t>
-
-    <t>
-      The same encoding is used both when returning file attributes from the server and when sending file attributes to the server.
-      When sending it to the server, the flags field specifies which attributes are included, and the server will use default values for the remaining attributes (or will not modify the values of remaining attributes).
-      When receiving attributes from the server, the flags specify which attributes are included in the returned data.
-      The server normally returns all attributes it knows about.
+      File attributes are encoded using the <tt>ATTRS</tt> compound data type:
     </t>
 
 <sourcecode>
@@ -285,8 +277,7 @@ string   extended_data
 
     <t>
       The <tt>flags</tt> specify which of the fields are present.
-      Those fields for which the corresponding flag is not set are not present (not included in the packet).
-      New flags can only be added by incrementing the protocol version number (or by using the extension mechanism described below).
+      Those fields for which the corresponding flag is not set are not included in the packet.
     </t>
 
     <t>
@@ -318,9 +309,6 @@ string   extended_data
     </t>
 
     <t>
-      Additional fields can be added to the attributes by either defining additional bits to the flags field to indicate their presence, or by defining extended attributes for them.
-      The extended attributes mechanism is recommended for most purposes; additional flags bits should only be defined by an IETF standards action that also increments the protocol version number.
-      The use of such new fields MUST be negotiated by the version number in the protocol exchange.
       It is a protocol error if a packet with unsupported flags bits is received.
     </t>
 
@@ -336,6 +324,14 @@ string   extended_data
 #define SSH_FILEXFER_ATTR_EXTENDED      0x80000000
 </sourcecode>
 
+    <t>
+      The <tt>ATTRS</tt> type is used when returning file attributes from the server and when sending file attributes to the server.
+      When sending it to the server, the flags field specifies which attributes are included.
+      For attributes that are not included the server MUST either use default values or not modify existing values.
+
+      When receiving attributes from the server, the flags specify which attributes are included in the returned data.
+      The server SHOULD return all attributes it knows about.
+    </t>
 
   </section>
 
