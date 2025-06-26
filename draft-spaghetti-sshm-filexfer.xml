@@ -810,7 +810,7 @@ ATTRS      attrs
 
     </section>
 
-    <section title="Dealing with Symbolic links">
+    <section title="Dealing with Symbolic links" anchor="sl">
 
       <t>
         The <tt>SSH_FXP_READLINK</tt> request may be used to read the target of a symbolic link.
@@ -1136,6 +1136,80 @@ uint32     id
    EMail: sjl@iki.fi
 </artwork>
     </figure>
+
+  </section>
+
+  <section title="Open Questions">
+
+    <t>
+      This section is to be removed before publication.
+    </t>
+
+    <section title="SSH_FXP_SYMLINK">
+
+      <t>
+	The <tt>SSH_FXP_SYMLINK</tt> in <xref target="sl"/> is specified as
+      </t>
+
+<sourcecode>
+uint32     id
+string     linkpath
+string     targetpath
+</sourcecode>
+
+      <t>
+	The wildly deployed OpenSSH implementation deviates from that
+<sourcecode>
+https://cvsweb.openbsd.org/cgi-bin/cvsweb/~checkout~/src/usr.bin/ssh/PROTOCOL
+</sourcecode>
+      </t>
+
+      <blockquote>
+	4.1. sftp: Reversal of arguments to SSH_FXP_SYMLINK
+
+	When OpenSSH's sftp-server was implemented, the order of the arguments
+	to the SSH_FXP_SYMLINK method was inadvertently reversed. Unfortunately,
+	the reversal was not noticed until the server was widely deployed. Since
+	fixing this to follow the specification would cause incompatibility, the
+	current order was retained. For correct operation, clients should send
+	SSH_FXP_SYMLINK as follows:
+	<sourcecode>
+          uint32     id
+          string     targetpath
+          string     linkpath
+	</sourcecode>
+      </blockquote>
+
+      <t>
+	Should we instead fix the draft?
+	AsyncSSH implements both versions and matches on the client or server version string:
+
+<sourcecode>
+https://github.com/ronf/asyncssh/blob/76c14dd0034d33773e2f50f91d167bfd22c3e021/asyncssh/sftp.py#L3182
+
+https://github.com/ronf/asyncssh/blob/76c14dd0034d33773e2f50f91d167bfd22c3e021/asyncssh/sftp.py#L2854
+</sourcecode>
+      </t>
+
+    </section>
+
+    <section title="SSH_FX_NO_CONNECTION / SSH_FX_CONNECTION_LOST">
+
+      <t>
+	<tt>SSH_FX_NO_CONNECTION</tt> and <tt>SSH_FX_CONNECTION_LOST</tt> are specified in <xref target="rftsttc" />.
+	They are "pseudo-error" codes and MUST NOT be returned by the server.
+	Can we remove them, they do not serve any purpose.
+	Or is this too confusing because it creates a gap in the status / error code list?
+      </t>
+    </section>
+
+    <section title="IANA registry">
+
+      <t>
+	While we have the hood open, do we want to direct the IANA to create a registry for extensions?
+      </t>
+
+    </section>
 
   </section>
 
