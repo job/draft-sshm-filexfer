@@ -376,7 +376,8 @@ string   extended_data
       </t>
 
       <t>
-        There are no restrictions on the order in which responses to outstanding requests are delivered to the client, except that the server must ensure fairness in the sense that processing of no request will be indefinitely delayed even if the client is sending other requests so that there are multiple outstanding requests all the time.
+        There are no restrictions on the order in which responses to outstanding requests are delivered to the client, except that the server must ensure fairness.
+	No request will be indefinitely delayed even if the client is sending other requests so that there are multiple outstanding requests all the time.
       </t>
 
     </section>
