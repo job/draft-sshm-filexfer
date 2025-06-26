@@ -390,7 +390,7 @@ string   extended_data
       </t>
 
       <t>
-        File names starting with a slash are "absolute", and are relative to the root of the file system.
+        File names starting with a slash ('/') are "absolute", and are relative to the root of the file system.
         Names starting with any other character are relative to the user's default directory (home directory).
         Note that identifying the user is assumed to take place outside of this protocol.
       </t>
