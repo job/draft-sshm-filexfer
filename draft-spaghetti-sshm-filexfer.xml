@@ -472,13 +472,12 @@ ATTRS         attrs
 
         <dt>SSH_FXF_CREAT</dt>
         <dd>
-          If this flag is specified, then a new file will be created if one does not already exist (if <tt>O_TRUNC</tt> is specified, the new file will be truncated to zero length if it previously exists).
+	  Create the file if it does not already exist.
         </dd>
 
         <dt>SSH_FXF_TRUNC</dt>
         <dd>
-          Forces an existing file with the same name to be truncated to zero length when creating a file by specifying <tt>SSH_FXF_CREAT</tt>.
-          <tt>SSH_FXF_CREAT</tt> MUST also be specified if this flag is used.
+	  Truncate an existing file to zero length.
         </dd>
 
         <dt>SSH_FXF_EXCL</dt>
