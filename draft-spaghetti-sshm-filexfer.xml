@@ -907,7 +907,7 @@ string     language tag (as defined in RFC 1766)
     </t>
 
     <t>
-      Currently, the following values are defined (other values may be defined by future versions of this protocol):
+      The following values are defined:
     </t>
 
 <sourcecode>
