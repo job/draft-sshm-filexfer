@@ -405,8 +405,7 @@ string   extended_data
       </t>
 
       <t>
-        Otherwise, no syntax is defined for file names by this specification.
-        Clients should not make any other assumptions; however, they can splice path name components returned by SSH_FXP_READDIR together using a slash ('/') as the separator, and that will work as expected.
+        Clients can splice path name components returned by SSH_FXP_READDIR together using a slash ('/') as the separator.
       </t>
 
       <t>
