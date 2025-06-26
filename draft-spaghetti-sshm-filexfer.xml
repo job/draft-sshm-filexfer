@@ -409,8 +409,7 @@ string   extended_data
       </t>
 
       <t>
-        It is understood that the lack of well-defined semantics for file names may cause interoperability problems between clients and servers using radically different operating systems.
-        However, this approach is known to work acceptably with most systems, and alternative approaches that e.g. treat file names as sequences of structured components are quite complicated.
+	Otherwise, no syntax is defined for file names by this specification.
       </t>
 
     </section>
