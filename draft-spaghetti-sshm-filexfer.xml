@@ -397,8 +397,7 @@ string   extended_data
 
       <t>
         Servers SHOULD interpret a path name component ".." as referring to the parent directory, and "." as referring to the current directory.
-        If the server implementation limits access to certain parts of the file system, it must be extra careful in parsing file names when enforcing such restrictions.
-        There have been numerous reported security bugs where a ".." in a path name has allowed access outside the intended area.
+	Care must be taken that clients cannot use ".." to escape file system access limitations set by the server.
       </t>
 
       <t>
