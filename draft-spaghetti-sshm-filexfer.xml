@@ -368,7 +368,7 @@ string   extended_data
     <section title="Request Synchronization and Reordering">
 
       <t>
-        The protocol and implementations MUST process requests relating to the same file in the order in which they are received.
+        The server MUST process requests relating to the same file in the order in which they are received.
         In other words, if an application submits multiple requests to the server, the results in the responses will be the same as if it had sent the requests one at a time and waited for the response in each case.
         For example, the server may process non-overlapping read/write requests to the same file in parallel, but overlapping reads and writes cannot be reordered or parallelized.
         However, there are no ordering restrictions on the server for processing requests from two different file transfer connections.
