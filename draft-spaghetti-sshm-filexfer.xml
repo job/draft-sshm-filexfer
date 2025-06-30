@@ -868,22 +868,22 @@ string     path
   <section title="Responses from the Server to the Client" anchor="rftsttc">
 
     <t>
-      The server responds to the client using one of a few response packets.
-      All requests MUST return a <tt>SSH_FXP_STATUS</tt> response upon failure.
-      When the operation is successful, any of the responses may be returned (depending on the operation).
-      If no data needs to be returned to the client, the <tt>SSH_FXP_STATUS</tt> response with <tt>SSH_FX_OK</tt> status MUST be send.
-      Otherwise, the <tt>SSH_FXP_HANDLE</tt> message is used to return a file handle (for <tt>SSH_FXP_OPEN</tt> and <tt>SSH_FXP_OPENDIR</tt> requests), <tt>SSH_FXP_DATA</tt> is used to return data from <tt>SSH_FXP_READ</tt>, <tt>SSH_FXP_NAME</tt> is used to return one or more file names from a <tt>SSH_FXP_READDIR</tt> or <tt>SSH_FXP_REALPATH</tt> request, and <tt>SSH_FXP_ATTRS</tt> is used to return file attributes from <tt>SSH_FXP_STAT</tt>, <tt>SSH_FXP_LSTAT</tt>, and <tt>SSH_FXP_FSTAT</tt> requests.
-    </t>
-
-    <t>
-      Exactly one response will be returned for each request.
-      Each response packet MUST contain a request identifier which MUST be used to match each response with the corresponding request.
-      Note that it is legal to have several requests outstanding simultaneously, and the server MAY send responses to them in a different order from the order in which the requests were sent (the result of their execution, however, is MUST be as if they had been processed one at a time in the order in which the requests were sent).
+      Exactly one response MUST be returned by the server for each request from the client.
+      Each response packet MUST contain a request identifier which MUST be used to match the response with the corresponding request.
+      Note that it is legal to have several requests outstanding simultaneously, and the server MAY send responses for them in a different order from the order in which the requests were sent.
+      The result of their execution, however, MUST be as if they had been processed one at a time in the order in which the requests were sent.
     </t>
 
     <t>
       Response packets are of the same general format as request packets.
       Each response packet begins with the request identifier.
+    </t>
+
+    <t>
+      In case a request fails, the server MUST return a <tt>SSH_FXP_STATUS</tt> message.
+      When the operation is successful, the response message type depends on the request.
+      If no data needs to be returned to the client, the server MUST respond with a <tt>SSH_FXP_STATUS</tt> message and the status MUST be <tt>SSH_FX_OK</tt>.
+      Otherwise, the <tt>SSH_FXP_HANDLE</tt> message is used to return a file handle for <tt>SSH_FXP_OPEN</tt> or <tt>SSH_FXP_OPENDIR</tt> requests, <tt>SSH_FXP_DATA</tt> is used to return data for <tt>SSH_FXP_READ</tt> requests, <tt>SSH_FXP_NAME</tt> is used to return one or more file names for <tt>SSH_FXP_READDIR</tt> or <tt>SSH_FXP_REALPATH</tt> requests, and <tt>SSH_FXP_ATTRS</tt> is used to return file attributes for <tt>SSH_FXP_STAT</tt>, <tt>SSH_FXP_LSTAT</tt>, or <tt>SSH_FXP_FSTAT</tt> requests.
     </t>
 
     <t>
