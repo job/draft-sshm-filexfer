@@ -858,7 +858,7 @@ string     path
         where <tt>id</tt> is the request identifier and <tt>path</tt> specifies the path name to be canonicalized.
 	If an error occurs, the server MUST respond with <tt>SSH_FXP_STATUS</tt>.
         Otherwise, the server MUST respond with a <tt>SSH_FXP_NAME</tt> packet containing only one name and a dummy attributes value.
-        The name is the returned packet will be in canonical form.
+        The name in the returned packet MUST be in canonical form.
       </t>
 
     </section>
