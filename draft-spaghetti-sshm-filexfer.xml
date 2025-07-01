@@ -65,7 +65,7 @@
 
   <abstract>
     <t>
-       The SSH File Transfer Protocol provides secure file transfer functionality over any reliable data stream.
+       The SSH File Transfer Protocol provides secure file transfer functionality over any secure and reliable data stream.
        It is the standard file transfer protocol for use with the SSH2 protocol.
        This document describes the file transfer protocol and its interface to the SSH2 protocol suite.
     </t>
@@ -83,7 +83,7 @@
 
   <section title="Introduction">
     <t>
-       This protocol provides secure file transfer (and more generally file system access) functionality over a reliable data stream, such as a channel in the <xref target="RFC4251">SSH2 protocol</xref>.
+       This protocol provides secure file transfer (and more generally file system access) functionality over a secure and reliable data stream, such as a channel in the <xref target="RFC4251">SSH2 protocol</xref>.
     </t>
 
     <t>
