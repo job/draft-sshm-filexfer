@@ -793,7 +793,7 @@ ATTRS      attrs
 </sourcecode>
 
       <t>
-        where <tt>id</tt> is the request identifier, <tt>handle</tt> (MUST be returned by <tt>SSH_FXP_OPEN</tt>) identifies the file whose attributes are to be modified, and <tt>attrs</tt> specifies the modifications to be made to its attributes.
+        where <tt>id</tt> is the request identifier, <tt>handle</tt> is a file handle returned by <tt>SSH_FXP_OPEN</tt> identifying the file whose attributes are to be modified, and <tt>attrs</tt> specifies the modifications to be made to its attributes.
         Attributes are discussed in more detail in <xref target="fa"/>.
         The server MUST respond to this request with <tt>SSH_FXP_STATUS</tt>.
 	The server MUST return an error if the user does not have sufficient rights to modify the specified attributes.
