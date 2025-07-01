@@ -963,7 +963,7 @@ string     language tag
 
       <dt>SSH_FX_OP_UNSUPPORTED</dt>
       <dd>
-        indicates that an attempt was made to perform an operation which is not supported for the server (it may be generated locally by the client if e.g. the version number exchange indicates that a required feature is not supported by the server, or it MAY be returned by the server if the server does not implement an operation).
+        indicates that an attempt was made to perform an operation which is not supported by the server (it may be generated locally by the client if e.g. the version number exchange indicates that a required feature is not supported by the server, or it MAY be returned by the server if the server does not implement an operation).
       </dd>
 
     </dl>
@@ -1011,7 +1011,7 @@ repeats count times:
 </sourcecode>
 
     <t>
-      where <tt>id</tt> is the request identifier, <tt>count</tt> is the number of names returned in this response, and the remaining fields repeat count' times (so that all three fields are first included for the first file, then for the second file, etc).
+      where <tt>id</tt> is the request identifier, <tt>count</tt> is the number of names returned in this response, and the remaining fields repeat count times (so that all three fields are first included for the first file, then for the second file, etc).
       In the repeated part, <tt>filename</tt> is a file name being returned (for <tt>SSH_FXP_READDIR</tt>, it will be a relative name within the directory, without any path components; for <tt>SSH_FXP_REALPATH</tt> it will be an absolute path name), <tt>longname</tt> is an expanded format for the file name, similar to what is returned by <tt>ls -l</tt> on Unix-like systems, and <tt>attrs</tt> is the attributes of the file as described in <xref target="fa"/>.
     </t>
 
@@ -1067,7 +1067,7 @@ string     extended-request
 
     <t>
       where <tt>id</tt> is the request identifier, and <tt>extended-request</tt> SHOULD be a string of the format "name@domain", where domain is an internet domain name of the vendor defining the request.
-      The rest of the request is completely vendor-specific, and servers SHOULD only attempt to interpret it if they recognize the extended-request' name.
+      The rest of the request is completely vendor-specific, and servers SHOULD only attempt to interpret it if they recognize the extended-request name.
     </t>
 
     <t>
